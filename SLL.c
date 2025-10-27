@@ -1,7 +1,6 @@
-#include <iostream>
-using namespace std;
+# include <stdio.h>
 #include <stdlib.h>
-int pos, counter, c, choice, k, ch;
+int pos, counter, c, choice, k=0, ch;
 struct node // structure
 {
     int info;
@@ -20,10 +19,10 @@ void Display() // Display
     temp = start;
     while (temp != NULL)
     {
-        cout << temp->info << endl;
+        printf("%d\n", temp->info);
         temp = temp->next;
     }
-    cout << "End" << endl;
+    printf("End\n\n");
 }
 int lngth() // length of node
 {
@@ -40,7 +39,7 @@ void insbeg() // Insert in beginning
 {
     if (newn == NULL)
     {
-        cout << "Failed Memory Allocation";
+        printf("Failed Memory Allocation");
     }
     else if (start == NULL)
     {
@@ -54,80 +53,89 @@ void insbeg() // Insert in beginning
 }
 void inspos() // Insert at a position
 {
-    cout << "Enter Position: ";
-    cin >> pos;
+    printf("Enter Position: ");
+    scanf("%d", &pos);
     if (pos > lngth())
     {
-        cout << "Out of Range\n";
+        printf("Out of Range\n\n");
     }
     else
     {
         counter = 1;
         temp = start;
-        while (counter < pos)
+        while (counter < pos - 1)
         {
             temp = temp->next;
             counter++;
         }
         newn->next = temp->next;
         temp->next = newn;
-        cout << "Inserted\n";
+        printf("Inserted\n\n");
     }
 }
 void inslst() // Insert at last
 {
-    temp = start;
-    while (temp->next != NULL)
+    if (newn == NULL)
     {
-        temp = temp->next;
+        printf("Failed Memory Allocation");
     }
-    temp->next = newn;
+    else if (start == NULL)
+    {
+        start = newn;
+    }
+    else
+    {
+        temp = start;
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = newn;
+    }
+    printf("Inserted\n\n");
 }
 void Insert() // Whole Insert module
 {
-    cout << "Enter value: ";
-    cin >> k;
-    newn = create(k);
-    while (true)
+    int val;
+    printf("Enter value: ");
+    scanf("%d", &val);
+    newn = create(val);
+    printf("1-To insert in begining\n2-To insert in a position\n3-To insert at last\n0-to exit: ");
+    scanf("%d", &ch);
+    switch (ch)
     {
-        cout << "1-To insert in begining\n2-To insert in a position\n3-To insert at last\n0-To Exit: ";
-        cin >> ch;
-        switch (ch)
-        {
-        case 1:
-        {
-            insbeg();
-            break;
-        }
-        case 2:
-        {
-            inspos();
-            break;
-        }
-        case 3:
-        {
-            inslst();
-            break;
-        }
-        case 0:
-        {
-            cout << "Exit" << endl;
-            exit(0);
-        }
-        }
+    case 1:
+    {
+        insbeg();
+        break;
+    }
+    case 2:
+    {
+        inspos();
+        break;
+    }
+    case 3:
+    {
+        inslst();
+        break;
+    }
+    case 0:
+    {
+        exit(0);
+    }
     }
 }
 void delbeg() // Delete beginning
 {
     temp = start;
-    start = temp->next;
+    start = start->next;
     temp->next = NULL;
     free(temp);
 }
 void delpos() // Delete at position
 {
-    cout << "Enter Position: ";
-    cin >> pos;
+    printf("Enter Position: ");
+    scanf("%d", &pos);
     counter = 1;
     temp = start;
     while (counter < pos)
@@ -136,7 +144,7 @@ void delpos() // Delete at position
         temp = temp->next;
         counter++;
     }
-    cout << "Deleted: " << temp->info << endl;
+    printf("Deleted: %d\n\n", temp->info);
     ptr->next = temp->next;
     temp->next = NULL;
     free(temp);
@@ -150,14 +158,14 @@ void delst() // Delete at last
         temp = temp->next;
     }
     ptr->next = NULL;
-    cout << "Deleted: " << temp->info << endl;
+    printf("Deleted: %d\n\n", temp->info);
     free(temp);
 }
 void Delete() // Whole Delete module
 {
     int ch;
-    cout << "1-To delete in begining\n2-To delete in a position\n3-To delete at last\n0-to exit: ";
-    cin >> ch;
+    printf("1-To delete in begining\n2-To delete in a position\n3-To delete at last\n0-to exit: ");
+    scanf("%d", &ch);
     switch (ch)
     {
     case 1:
@@ -181,44 +189,39 @@ void Delete() // Whole Delete module
     }
     }
 }
-// Starting Point
 int main()
 {
+    start = NULL;
     while (1)
     {
-        cout << "0-Exit\n1-Display\n2-Insert\n3-Delete\n4-Length: ";
-        cin >> choice;
-        switch (choice)
+        printf("1-Insert\n2-Delete\n3-Display\n4-Length\n0-Exit\nEnter your choice: ");
+        scanf("%d", &k);
+        switch (k)
         {
-        case 0:
-        {
-            cout << "Exit" << endl;
-            exit(0);
-        }
         case 1:
-        {
-            Display();
-            break;
-        }
-        case 2:
         {
             Insert();
             break;
         }
-        case 3:
+        case 2:
         {
             Delete();
             break;
         }
-        case 4:
+        case 3:
         {
-            cout << "Length: " << lngth() << endl;
+            Display();
             break;
         }
-        default:
+        case 4:
         {
-            cout << "Invalid Input" << endl;
+            printf("Length is: %d\n\n", lngth());
             break;
+        }
+        case 0:
+        {
+            printf("Exit\n");
+            exit(0);
         }
         }
     }
