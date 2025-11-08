@@ -1,84 +1,61 @@
-# include <stdio.h>
-# include <stdlib.h>
-int front = -1, rear = -1, val, f1 = -1, r2 = -1, v;
-int q[100], tq[100];
+#include <stdio.h>
+#include <stdlib.h>
+int front = -1, rear = -1, val, v;
+int q[100];
 void display() {
-    while(rear >front) {
-        printf("%d ", q[front++]);
-    }
-    rear = -1;
-    front = -1;
-}
+    if (front == -1) {
+        printf("Queue is empty\n");
+        return;    }
+    printf("Queue elements: ");
+    for (int i = front; i <= rear; i++) {
+        printf("%d ", q[i]);    }
+    printf("\n");}
 void ins() {
-    printf("0-Exit:  ");
-    while(1) {
-        printf("\nEnter number in the queue: ");
+    printf("Enter 0 to stop insertion\n");
+    while (1) {
+        printf("Enter number in the queue: ");
         scanf("%d", &val);
         if (val == 0) {
-            break;
-        }
-        else
-        {
-            if(rear >= 99) {
-                printf("OVERFLOW/nCan't add\n");
-            }
-            else
-            {
-                q[++rear] = val;
-                printf("Added Value %d successfully\n", q[rear]);
-                if (rear == 0) {
-                    front = rear;
+            break;     } 
+        else {
+            if (rear >= 99) {
+                printf("OVERFLOW\nCan't add more elements\n");
+                break;            } 
+            else {
+                if (front == -1) { // first insertion
+                    front = 0;
                 }
-            }
-        }
-    }
-}
+                q[++rear] = val;
+                printf("Added value %d successfully\n", q[rear]);
+            }   } }}
 void del() {
     if (front == -1) {
-        printf("Empty queue\n");
-    }
+        printf("Queue is empty\n");  }
     else if (front == rear) {
         v = q[front];
-        front = -1;
-        rear = -1;
-        printf("Deleted: %d..Now Empty\n", v);
-    }
-    else
-    {
+        front = rear = -1;
+        printf("Deleted %d (Queue now empty)\n", v); } 
+    else {
         v = q[front];
         front++;
-        printf("Deleted %d\n", v);
-    }
-}
+        printf("Deleted %d\n", v);  }}
 int main() {
     ins();
-    while(1) {
-        printf("Enter:0-Exit\n1-Insert   2-Delete   3-Display:  ");
+    while (1) {
+        printf("\nEnter:\n0 - Exit\n1 - Insert\n2 - Delete\n3 - Display\nChoice: ");
         int ch;
         scanf("%d", &ch);
-        switch(ch) {
-            case (0):
-            {
+        switch (ch) {
+            case 0:
                 exit(0);
-            }
-            case (1):
-            {
+            case 1:
                 ins();
                 break;
-            }
-            case (2):
-            {
+            case 2:
                 del();
                 break;
-            }
-            case (3):
-            {
+            case 3:
                 display();
-            }
+                break;
             default:
-            {
-                printf("Invalid Choice\n");
-            }
-        }
-    }
-}
+                printf("Invalid choice\n");}}}

@@ -1,81 +1,65 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-int size = 100;         // Change queue size here
+int size = 100;
 int queue[100];
 int front = -1, rear = -1;
-
-int isFull() {
-    return (rear + 1) % size == front;}
-
-int isEmpty() {
-    return front == -1;
-}
-
-void enqueue(int val) {
-    if (isFull()) {
-        printf("Queue overflow");
-        return;
-    }
-    if (isEmpty()) {
-        front = rear = 0;
-    } else {
-        rear = (rear + 1) % size;
-    }
-    queue[rear] = val;
-    printf("Inserted %d", val);
-}
-
-void dequeue() {
-    if (isEmpty()) {
-        printf("Queue underflow");
-        return;
-    }
-    printf("Deleted %d", queue[front]);
-    if (front == rear)
-        front = rear = -1;
+int choice, x;
+int enq()
+{    printf("Enter value: ");
+    scanf("%d", &x);
+    if ((front == 0 && rear == 9) || (front == rear + 1))
+    {   printf("Queue is full\n");
+        return 0;  }
+    if (front == -1)
+    {front = rear = 0;    }
+    else if (rear == 9)
+    {rear = 0;}
     else
-        front = (front + 1) % size;
-}
-
-void display() {
-    if (isEmpty()) {
-        printf("Queue is empty");
-        return;
-    }
+    { rear++;  }
+    queue[rear] = x;
+    return 0;}
+int deq()
+{   if (front == -1)
+    {   printf("Queue is empty\n");
+        return 0;    }
+    printf("Deleted %d\n", queue[front]);
+    if (front == rear)
+    {  front = rear = -1;   }
+    else if (front == 9)
+    {   front = 0;  }
+    else
+    {    front++; }
+    return 0;}
+int  display()
+{   if (front == -1)
+    {   printf("Queue is empty\n");
+        return 0;  }
+    printf("Queue elements: ");
     int i = front;
-    printf("Queue: ");
-    while (1) {
-        printf("%d ", queue[i]);
+    while (1)
+    {   printf("%d ", queue[i]);
         if (i == rear)
-            break;
-        i = (i + 1) % size;
-    }
-    printf("");
-}
-
-int main() {
-    int choice, val;
-    while (1) {
-        printf("\nMenu:1. Insert 2.Delete\n3.Display0.Exit\nEnter choice: ");
+            return 0;
+        i = (i + 1) % 10;   }
+    printf("\n");}
+int main()
+{    while (1)
+    {   printf("\n1.Enqueue  2.Dequeue\n3.Display  4.Exit  ");
+        printf("Enter choice: ");
         scanf("%d", &choice);
-        switch (choice) {
-            case 1:
-                printf("Enter value to insert: ");
-                scanf("%d", &val);
-                enqueue(val);
-                break;
-            case 2:
-                dequeue();
-                break;
-            case 3:
-                display();
-                break;
-            case 0:
-                exit(0);
-            default:
-                printf("Invalid choice");
-        }
-    }
-    return 0;
-}
+        switch (choice)
+        {case 1:
+            enq();
+            break;
+        case 2:
+           {deq();   
+           break;}
+        case 3: 
+           { display();
+            break;}
+
+        case 4:
+            exit(0);
+        default:
+            printf("Invalid choice\n");
+        } }}
