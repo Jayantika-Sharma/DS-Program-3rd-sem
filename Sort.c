@@ -57,6 +57,7 @@ int main() {
     }
     int choice;
     printf("Enter \n1-Bubble Sort 2-Selection Sort  3-Insertion Sort:");
+    scanf("%d", &choice);
     switch(choice)
     {
         case 1:
@@ -71,7 +72,7 @@ int main() {
         }
         case 3:
         {
-            insertionsort(arr,n);
+            insertionSort(arr,n);
             break;
         }
         default:
